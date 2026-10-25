@@ -171,7 +171,7 @@ def main() -> int:
     require(cli.is_file(), "Native CLI is missing.")
     require(sha(source) == finishes.SOURCE_SHA256 and source.stat().st_size == 314452, "Source is not the pinned author-supplied file.")
     source_doc = document(source)
-    version = subprocess.check_output([str(cli), "--version"], text=True).strip()
+    version = subprocess.check_output([str(cli), "--version"], text=True).strip()  # nosemgrep: dangerous-subprocess-use-tainted-env-args - cli is the operator-supplied binary this build tool exists to drive; list-args, no shell
     work.mkdir(parents=True, exist_ok=True)
     history_file = work / "build-history.json"
     initial = {

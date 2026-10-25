@@ -5,7 +5,7 @@ import os
 import re
 import tomllib
 import uuid
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET  # nosemgrep: use-defused-xml - stdlib-only tooling (see module docstring) parsing repo-authored SVG masters
 
 VISIONS = ('off', 'red-green', 'blue-yellow')
 
