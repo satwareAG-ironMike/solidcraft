@@ -103,7 +103,7 @@ def main() -> int:
         for name in names:
             command += ["--extern", f"{name}={artifacts[name]}"]
         with (out / "probe-build.log").open("w", encoding="utf-8") as log:
-            result = subprocess.run(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+            result = subprocess.run(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)  # nosemgrep: dangerous-subprocess-use-tainted-env-args - rustc invocation over workspace-derived paths; list-args, no shell
         record["commands"].append({"command": command, "exit_code": result.returncode})
         if result.returncode:
             raise RuntimeError("Native probe build failed; inspect probe-build.log")
@@ -113,7 +113,7 @@ def main() -> int:
         env.update(SOLIDCRAFT_GPU="hardware", SOLIDCRAFT_REQUIRE_GPU="1", WGPU_BACKEND="vulkan")
         command = [str(binary), str(ROOT), str(out)]
         with (out / "render.log").open("w", encoding="utf-8") as stdout, (out / "adapter.log").open("w", encoding="utf-8") as stderr:
-            result = subprocess.run(command, cwd=ROOT, env=env, stdout=stdout, stderr=stderr, stdin=subprocess.DEVNULL)
+            result = subprocess.run(command, cwd=ROOT, env=env, stdout=stdout, stderr=stderr, stdin=subprocess.DEVNULL)  # nosemgrep: dangerous-subprocess-use-tainted-env-args - runs the locally built probe binary; list-args, no shell
         record["commands"].append({"command": command, "exit_code": result.returncode})
         if result.returncode:
             raise RuntimeError("Native GPU resource probe failed; inspect render.log and adapter.log")

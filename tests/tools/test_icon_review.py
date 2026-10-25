@@ -14,7 +14,7 @@ import tomllib
 import unittest
 import urllib.error
 import urllib.request
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET  # nosemgrep: use-defused-xml - test parses its own inline SVG literals
 
 TOOLS = Path(__file__).resolve().parents[2] / 'assets/icons/ui/design/tools'
 SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="currentColor"/></svg>'
