@@ -36,7 +36,10 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry \
 FROM scratch AS site
 COPY --from=build /src/dist/web/ /
 
-FROM nginxinc/nginx-unprivileged:1.29-alpine
+# jane: runtime image digest-pinned (tag@sha256); bump by re-resolving the tag's
+# manifest-list digest - the builder stage keeps its version-qualified tag because
+# RUST_VERSION deliberately couples the toolchain to the image.
+FROM nginxinc/nginx-unprivileged:1.29-alpine@sha256:0c79d56aee561a1d81c63f00eee5fb5fe29279560cdc55e91425133104c7fbe6
 COPY packaging/docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY LICENSE-MIT LICENSE-APACHE NOTICE THIRD-PARTY-LICENSES.txt /usr/share/doc/solidcraft/
 COPY --from=site / /srv/solidcraft/
