@@ -1,0 +1,16 @@
+# betterleaks/gitleaks false-positive allowlist. Scanner textual rules match
+# CAD sketch feature names; entries here are shape-verified non-secrets.
+# Do not add broad paths - each entry is a documented false positive.
+title = "solidcraft allowlist"
+
+[allowlist]
+description = "textual false positives: snake_case 'lip_*' CAD feature names vs the lichess 'lip_<token>' rule; a fabricated base64 test marker"
+regexes = [
+    # lichess tokens are lip_ + 25 mixed-case alphanumerics with NO
+    # underscores; these are lowercase snake_case feature names (docs,
+    # action-matrix fixtures) that share only the lip_ prefix.
+    '''lip_[a-z0-9]+(_[a-z0-9]+)+''',
+    # base64 of "solidcraft-test!": fabricated marker in xtask's offline
+    # web test, not a credential.
+    '''c29saWRjcmFtdC10ZXN0IQ==''',
+]
