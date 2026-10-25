@@ -15,7 +15,7 @@ regexes = [
     # underscores; these are lowercase snake_case feature names (docs,
     # action-matrix fixtures) that share only the lip_ prefix.
     '''lip_[a-z0-9]+(_[a-z0-9]+)+''',
-    # base64 of "solidcraft-test!": fabricated marker in xtask's offline
-    # web test, not a credential.
-    '''c29saWRjcmFtdC10ZXN0IQ==''',
+    # base64 of "solidcraft-test!" (bytes verified against the fixture):
+    # fabricated marker in xtask's offline web test, not a credential.
+    '''c29saWRjcmFmdC10ZXN0IQ==''',
 ]
