@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Rules every icon master in svg/ must satisfy (stdlib only). usage: lint_icons.py <design dir>"""
-import sys, glob, os, re, tomllib, xml.etree.ElementTree as ET
+import sys, glob, os, re, tomllib, xml.etree.ElementTree as ET  # nosemgrep: use-defused-xml - stdlib-only linter (docstring) over repo-authored SVG masters
 import icon_palette
 from pathlib import Path
 d = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +25,7 @@ for f in files:
     fam, name = os.path.basename(os.path.dirname(f)), os.path.basename(f)[:-4]
     if fam not in FAMILIES: err(f, 'unknown family'); continue
     if not re.fullmatch(r'[a-z][a-z0-9_]*', name): err(f, 'file name must be an app icon id (lower_snake_case)')
-    t = ET.parse(f).getroot(); ns = '{http://www.w3.org/2000/svg}'
+    t = ET.parse(f).getroot(); ns = '{http://www.w3.org/2000/svg}'  # nosemgrep: use-defused-xml-parse - repo-authored SVG masters, stdlib-only linter
     if t.get('viewBox') != '0 0 64 64': err(f, 'viewBox must be 0 0 64 64')
     for a in ('width', 'height'):
         if t.get(a): err(f, a + ' attribute on svg')
