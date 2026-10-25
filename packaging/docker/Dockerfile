@@ -40,5 +40,8 @@ FROM nginxinc/nginx-unprivileged:1.29-alpine
 COPY packaging/docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY LICENSE-MIT LICENSE-APACHE NOTICE THIRD-PARTY-LICENSES.txt /usr/share/doc/solidcraft/
 COPY --from=site / /srv/solidcraft/
+# The nginx-unprivileged base runs as UID/GID 101 (nginx); restate it so the
+# image's own stages leave no ambiguity for scanners and future edits.
+USER 101:101
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s CMD wget -q --spider http://127.0.0.1:8080/ || exit 1
