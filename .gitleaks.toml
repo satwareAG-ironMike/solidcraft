@@ -3,6 +3,11 @@
 # Do not add broad paths - each entry is a documented false positive.
 title = "solidcraft allowlist"
 
+# Preserve the full built-in ruleset: a repo config replaces it unless extended.
+# Without this line every default detector (aws, github, slack, ...) is OFF.
+[extend]
+useDefault = true
+
 [allowlist]
 description = "textual false positives: snake_case 'lip_*' CAD feature names vs the lichess 'lip_<token>' rule; a fabricated base64 test marker"
 regexes = [
