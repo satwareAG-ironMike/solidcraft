@@ -1,0 +1,23 @@
+# zizmor audit exceptions. Every entry documents why the flagged pattern is
+# mitigated for this repository; re-evaluate when a listed workflow changes.
+# Findings that are NOT mitigated must be fixed, not listed here.
+rules:
+  cache-poisoning:
+    ignore:
+      # CI's sccache lives on a Blacksmith sticky disk: only main commits it,
+      # pull requests, the merge queue and forks mount a clone and never
+      # write back, so nothing they build can reach main's cache (ci.yml).
+      # docker.yml's pull_request builds smoke-test the image and publish
+      # nothing; release.yml runs only on trusted triggers (release branch
+      # push, nightly schedule, manual dispatch).
+      - docker.yml
+      - release.yml
+  dangerous-triggers:
+    ignore:
+      # pull_request_target lets fork PRs be labelled/assigned by the bots.
+      # Each workflow runs the BASE branch's script and never checks out the
+      # PR's code (stated in each workflow's header comment; the scripts only
+      # read the PR's title, body, author and changed paths).
+      - claim.yml
+      - triage.yml
+      - kernel-paused.yml
